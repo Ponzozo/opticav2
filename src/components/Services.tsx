@@ -60,7 +60,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
   const selectedService = t.services.items.find(s => s.id === selectedServiceId);
 
   return (
-    <section id="servicios" className="py-16 sm:py-20 bg-[#FAF8F5] relative overflow-hidden">
+    <section id="servicios" className="py-16 sm:py-20 bg-[var(--bg-page)] relative overflow-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -71,13 +71,13 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center max-w-3xl mx-auto mb-10 sm:mb-14"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBE3D3] text-[#18181B] border border-[#D5C6AC] text-xs font-bold tracking-wide uppercase mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--bg-badge)] text-[var(--bg-badge-text)] border border-[var(--border-badge)] text-xs font-bold tracking-wide uppercase mb-3">
             {t.services.badge}
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#18181B] tracking-tight font-outfit">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)] tracking-tight font-outfit">
             {t.services.title}
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#5C5349]">
+          <p className="mt-3 text-base sm:text-lg text-[var(--text-secondary)]">
             {t.services.subtitle}
           </p>
         </motion.div>
@@ -85,10 +85,10 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
         {/* Mobile / Tablet Horizontal Carousel Controls */}
         <div className="flex md:hidden items-center justify-between mb-4 px-1">
           <div className="flex items-center gap-1.5">
-            <span className="text-xs font-bold text-[#8C5E2D] uppercase tracking-wide">
+            <span className="text-xs font-bold text-[#C5A059] uppercase tracking-wide">
               {activeSlide + 1} / {t.services.items.length}
             </span>
-            <span className="text-xs text-[#8C8375]">• Desliza para explorar</span>
+            <span className="text-xs text-[var(--text-muted)]">• Desliza para explorar</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -96,7 +96,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               onClick={() => scrollToSlide(Math.max(activeSlide - 1, 0))}
               disabled={activeSlide === 0}
               aria-label="Servicio anterior"
-              className="w-8 h-8 rounded-full bg-white border border-[#E2D8C7] flex items-center justify-center text-[#18181B] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F5EFE3] transition-colors shadow-2xs cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-main)] flex items-center justify-center text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-surface-elevated)] transition-colors shadow-2xs cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -104,7 +104,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               onClick={() => scrollToSlide(Math.min(activeSlide + 1, t.services.items.length - 1))}
               disabled={activeSlide === t.services.items.length - 1}
               aria-label="Siguiente servicio"
-              className="w-8 h-8 rounded-full bg-white border border-[#E2D8C7] flex items-center justify-center text-[#18181B] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F5EFE3] transition-colors shadow-2xs cursor-pointer"
+              className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-main)] flex items-center justify-center text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-surface-elevated)] transition-colors shadow-2xs cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -125,7 +125,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
-              className="w-[85vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 md:shrink snap-center group bg-white rounded-3xl overflow-hidden border border-[#EBE4D8] shadow-xs hover:shadow-xl hover:border-[#C5A059] transition-all duration-300 flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[570px] lg:h-[590px]"
+              className="w-[85vw] max-w-[340px] sm:w-[380px] md:w-auto shrink-0 md:shrink snap-center group bg-[var(--bg-card)] rounded-3xl overflow-hidden border border-[var(--border-main)] shadow-xs hover:shadow-xl hover:border-[#C5A059] transition-all duration-300 flex flex-col justify-between h-[520px] sm:h-[550px] md:h-[570px] lg:h-[590px]"
             >
               {/* Card Header (Fixed Height) */}
               <div className="relative h-40 sm:h-44 shrink-0 overflow-hidden bg-[#18181B]">
@@ -152,7 +152,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
                 </div>
 
                 {/* Icon badge floating bottom */}
-                <div className="absolute -bottom-3 right-4 w-12 h-12 rounded-2xl bg-white shadow-md border border-[#EBE4D8] flex items-center justify-center">
+                <div className="absolute -bottom-3 right-4 w-12 h-12 rounded-2xl bg-[var(--bg-card)] shadow-md border border-[var(--border-main)] flex items-center justify-center">
                   {getIcon(idx)}
                 </div>
               </div>
@@ -160,26 +160,26 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               {/* Card Body with Clean Internal Scroll to Standardize Card Height */}
               <div className="flex-1 overflow-y-auto p-5 sm:p-6 pt-4 space-y-3">
                 <div>
-                  <div className="text-[11px] font-bold text-[#8C5E2D] uppercase tracking-wider mb-1">
+                  <div className="text-[11px] font-bold text-[#C5A059] uppercase tracking-wider mb-1">
                     {service.tagline}
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-[#18181B] font-outfit leading-snug group-hover:text-[#8C5E2D] transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] font-outfit leading-snug group-hover:text-[#C5A059] transition-colors">
                     {service.title}
                   </h3>
                 </div>
 
-                <p className="text-xs sm:text-sm text-[#5C5349] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                   {service.description}
                 </p>
 
                 {/* Key Benefits List */}
-                <div className="space-y-2 pt-2 border-t border-[#F3EFE6]">
-                  <span className="text-[10px] font-bold text-[#8C5E2D] uppercase tracking-wider block">
+                <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)]">
+                  <span className="text-[10px] font-bold text-[#C5A059] uppercase tracking-wider block">
                     {t.services.equipmentLabel}
                   </span>
                   {service.benefits.map((benefit, bIdx) => (
-                    <div key={bIdx} className="flex items-start gap-2 text-xs font-medium text-[#3F3931]">
-                      <CheckCircle className="w-3.5 h-3.5 text-[#4E715B] shrink-0 mt-0.5" />
+                    <div key={bIdx} className="flex items-start gap-2 text-xs font-medium text-[var(--text-primary)]">
+                      <CheckCircle className="w-3.5 h-3.5 text-[#4E715B] dark:text-[#5C876D] shrink-0 mt-0.5" />
                       <span className="leading-snug">{benefit}</span>
                     </div>
                   ))}
@@ -187,10 +187,10 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               </div>
 
               {/* Card Footer Actions (Fixed at Bottom) */}
-              <div className="shrink-0 p-4 sm:p-5 border-t border-[#F3EFE6] flex items-center justify-between gap-2 bg-[#FAF8F5]">
+              <div className="shrink-0 p-4 sm:p-5 border-t border-[var(--border-subtle)] flex items-center justify-between gap-2 bg-[var(--bg-surface-elevated)]">
                 <button
                   onClick={() => setSelectedServiceId(service.id)}
-                  className="text-xs font-bold text-[#5C5349] hover:text-[#18181B] transition-colors inline-flex items-center gap-1 cursor-pointer py-1.5"
+                  className="text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors inline-flex items-center gap-1 cursor-pointer py-1.5"
                 >
                   <span>{t.common.viewCatalog}</span>
                   <ArrowRight className="w-3 h-3 text-[#C5A059]" />
@@ -217,7 +217,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               className={`h-2 rounded-full transition-all duration-300 ${
                 activeSlide === dotIdx
                   ? 'w-6 bg-[#C5A059]'
-                  : 'w-2 bg-[#D8CEBE] hover:bg-[#BFA88F]'
+                  : 'w-2 bg-[var(--border-main)] hover:bg-[#C5A059]/50'
               }`}
             />
           ))}
@@ -229,7 +229,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="mt-14 p-6 sm:p-8 rounded-3xl bg-[#18181B] text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6 border border-[#2D2A26]"
+          className="mt-14 p-6 sm:p-8 rounded-3xl bg-[var(--bg-banner)] text-white shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6 border border-[var(--border-banner)]"
         >
           <div className="flex items-center gap-4 text-center lg:text-left">
             <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-[#C5A059]/20 border border-[#C5A059]/30 text-[#E5C378] items-center justify-center shrink-0">
@@ -266,7 +266,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-[#FAF8F5] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-[#EBE4D8]"
+              className="bg-[var(--bg-card)] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-[var(--border-main)] text-[var(--text-primary)]"
             >
               <div className="relative h-44 bg-[#18181B]">
                 <img src={getServiceImage(selectedService.id, 0)} alt={selectedService.title} className="w-full h-full object-cover" />
@@ -284,26 +284,26 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
               </div>
 
               <div className="p-6 space-y-4">
-                <p className="text-sm text-[#5C5349] leading-relaxed">
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                   {selectedService.description}
                 </p>
 
-                <div className="p-3.5 bg-white rounded-2xl border border-[#EBE4D8] space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-[#3F3931]">
+                <div className="p-3.5 bg-[var(--bg-surface-elevated)] rounded-2xl border border-[var(--border-subtle)] space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-[var(--text-primary)]">
                     <Cpu className="w-4 h-4 text-[#C5A059] shrink-0" />
                     <span><strong>{t.services.equipmentLabel}:</strong> {selectedService.equipment}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-[#3F3931]">
+                  <div className="flex items-center gap-2 text-xs text-[var(--text-primary)]">
                     <Clock className="w-4 h-4 text-[#C5A059] shrink-0" />
                     <span><strong>{t.services.durationLabel}:</strong> {selectedService.duration}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h5 className="text-xs font-bold uppercase text-[#8C5E2D] tracking-wider">{t.services.badge}:</h5>
+                  <h5 className="text-xs font-bold uppercase text-[#C5A059] tracking-wider">{t.services.badge}:</h5>
                   {selectedService.benefits.map((b, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-medium text-[#3F3931]">
-                      <CheckCircle className="w-4 h-4 text-[#4E715B] shrink-0" />
+                    <div key={i} className="flex items-center gap-2 text-xs font-medium text-[var(--text-primary)]">
+                      <CheckCircle className="w-4 h-4 text-[#4E715B] dark:text-[#5C876D] shrink-0" />
                       <span>{b}</span>
                     </div>
                   ))}
@@ -322,7 +322,7 @@ export function Services({ onOpenBookingModal }: ServicesProps) {
                   </button>
                   <button
                     onClick={() => setSelectedServiceId(null)}
-                    className="py-3 px-4 rounded-xl border border-[#D8CEBE] text-[#3F3931] font-semibold text-sm hover:bg-[#F3EFE6] transition-all cursor-pointer"
+                    className="py-3 px-4 rounded-xl border border-[var(--border-main)] text-[var(--text-secondary)] font-semibold text-sm hover:bg-[var(--bg-surface-elevated)] transition-all cursor-pointer"
                   >
                     {t.common.close}
                   </button>

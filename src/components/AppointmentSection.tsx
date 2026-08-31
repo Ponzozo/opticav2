@@ -104,7 +104,7 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
   };
 
   return (
-    <section id="contacto" className="py-20 bg-white relative">
+    <section id="contacto" className="py-20 bg-[var(--bg-page)] relative transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -112,63 +112,63 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
           {/* Left Column: Context & Branch Info */}
           <div className="lg:col-span-5 space-y-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBE3D3] text-[#18181B] border border-[#D5C6AC] text-xs font-bold uppercase tracking-wider mb-3">
-                <Calendar className="w-3.5 h-3.5 text-[#8C5E2D]" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[var(--bg-badge)] text-[var(--bg-badge-text)] border border-[var(--border-badge)] text-xs font-bold uppercase tracking-wider mb-3">
+                <Calendar className="w-3.5 h-3.5 text-[#C5A059]" />
                 {t.appointment.badge}
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#18181B] tracking-tight font-outfit">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)] tracking-tight font-outfit">
                 {t.appointment.title}
               </h2>
-              <p className="mt-4 text-base text-[#524B42] leading-relaxed">
+              <p className="mt-4 text-base text-[var(--text-secondary)] leading-relaxed">
                 {t.appointment.subtitle}
               </p>
             </div>
 
             {/* Benefits of booking */}
             <div className="space-y-3.5">
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#EBE4D8]">
-                <CheckCircle className="w-5 h-5 text-[#4E715B] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)]">
+                <CheckCircle className="w-5 h-5 text-[#4E715B] dark:text-[#5C876D] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#18181B]">{t.appointment.benefit1Title}</h4>
-                  <p className="text-xs text-[#6B6155]">{t.appointment.benefit1Desc}</p>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)]">{t.appointment.benefit1Title}</h4>
+                  <p className="text-xs text-[var(--text-muted)]">{t.appointment.benefit1Desc}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#EBE4D8]">
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)]">
                 <Sparkles className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#18181B]">{t.appointment.benefit2Title}</h4>
-                  <p className="text-xs text-[#6B6155]">{t.appointment.benefit2Desc}</p>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)]">{t.appointment.benefit2Title}</h4>
+                  <p className="text-xs text-[var(--text-muted)]">{t.appointment.benefit2Desc}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#EBE4D8]">
-                <ShieldCheck className="w-5 h-5 text-[#8C5E2D] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)]">
+                <ShieldCheck className="w-5 h-5 text-[#C5A059] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-[#18181B]">{t.appointment.benefit3Title}</h4>
-                  <p className="text-xs text-[#6B6155]">{t.appointment.benefit3Desc}</p>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)]">{t.appointment.benefit3Title}</h4>
+                  <p className="text-xs text-[var(--text-muted)]">{t.appointment.benefit3Desc}</p>
                 </div>
               </div>
             </div>
 
             {/* Branch Directory Cards */}
             <div className="pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C8275] mb-3">{t.appointment.branchesHeader}:</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-3">{t.appointment.branchesHeader}:</h4>
               <div className="space-y-3">
                 {t.appointment.branchesData.map((b) => (
-                  <div key={b.id} className="p-4 rounded-2xl border border-[#EBE4D8] hover:border-[#C5A059] transition-colors bg-white shadow-2xs">
+                  <div key={b.id} className="p-4 rounded-2xl border border-[var(--border-main)] hover:border-[#C5A059] transition-colors bg-[var(--bg-card)] shadow-2xs">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-bold text-[#18181B]">{b.name}</span>
+                      <span className="text-sm font-bold text-[var(--text-primary)]">{b.name}</span>
                       {b.isMain && (
-                        <span className="px-2 py-0.5 rounded-md bg-[#EBE3D3] text-[#18181B] border border-[#D5C6AC] text-[10px] font-bold">{t.appointment.mainBadge}</span>
+                        <span className="px-2 py-0.5 rounded-md bg-[var(--bg-badge)] text-[var(--bg-badge-text)] border border-[var(--border-badge)] text-[10px] font-bold">{t.appointment.mainBadge}</span>
                       )}
                     </div>
-                    <p className="text-xs text-[#6B6155] flex items-center gap-1.5 mt-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#8C5E2D] shrink-0" />
+                    <p className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 mt-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
                       <span>{b.address} • {b.city}</span>
                     </p>
-                    <p className="text-xs text-[#6B6155] flex items-center gap-1.5 mt-1">
-                      <Clock className="w-3.5 h-3.5 text-[#4E715B] shrink-0" />
+                    <p className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 mt-1">
+                      <Clock className="w-3.5 h-3.5 text-[#4E715B] dark:text-[#5C876D] shrink-0" />
                       <span>{b.scheduleWeek}</span>
                     </p>
                   </div>
@@ -180,19 +180,19 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
 
           {/* Right Column: Interactive Form */}
           <div className="lg:col-span-7">
-            <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 border border-[#EBE4D8] shadow-sm relative">
+            <div className="bg-[var(--bg-card)] rounded-3xl p-6 sm:p-10 border border-[var(--border-main)] shadow-sm relative">
               
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-[#18181B] font-outfit">
+                <h3 className="text-2xl font-bold text-[var(--text-primary)] font-outfit">
                   {t.appointment.formTitle}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#6B6155] mt-1">
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1">
                   {t.appointment.formSubtitle}
                 </p>
               </div>
 
               {errorMsg && (
-                <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+                <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{errorMsg}</span>
                 </div>
@@ -202,11 +202,11 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                 
                 {/* Full Name */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                     {t.appointment.fullNameLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <User className="w-4 h-4" />
                     </div>
                     <input
@@ -215,7 +215,7 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                       placeholder={t.appointment.fullNamePlaceholder}
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                     />
                   </div>
                 </div>
@@ -223,11 +223,11 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                 {/* Phone and Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                       {t.appointment.phoneLabel}
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                         <Phone className="w-4 h-4" />
                       </div>
                       <input
@@ -236,17 +236,17 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                         placeholder={t.appointment.phonePlaceholder}
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                        className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                       {t.appointment.emailLabel}
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                         <Mail className="w-4 h-4" />
                       </div>
                       <input
@@ -255,7 +255,7 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                         placeholder={t.appointment.emailPlaceholder}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                        className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                       />
                     </div>
                   </div>
@@ -263,20 +263,20 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
 
                 {/* Branch Selection */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                     {t.appointment.branchLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <select
                       value={formData.branch}
                       onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
-                      className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                     >
                       {t.appointment.branchesData.map((branch) => (
-                        <option key={branch.id} value={branch.name}>
+                        <option key={branch.id} value={branch.name} className="bg-[var(--bg-card)] text-[var(--text-primary)]">
                           {branch.name} — {branch.city}
                         </option>
                       ))}
@@ -286,16 +286,16 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
 
                 {/* Service Selection */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                     {t.appointment.serviceLabel}
                   </label>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                    className="w-full px-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                   >
                     {t.appointment.servicesOptions.map((opt, i) => (
-                      <option key={i} value={opt}>
+                      <option key={i} value={opt} className="bg-[var(--bg-card)] text-[var(--text-primary)]">
                         {opt}
                       </option>
                     ))}
@@ -305,11 +305,11 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                 {/* Date and Time Slot */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                       {t.appointment.dateLabel}
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                         <Calendar className="w-4 h-4" />
                       </div>
                       <input
@@ -318,26 +318,26 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                         required
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                        className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                       {t.appointment.timeSlotLabel}
                     </label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                      <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                         <Clock className="w-4 h-4" />
                       </div>
                       <select
                         value={formData.timeSlot}
                         onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none"
+                        className="w-full pl-10 pr-4 py-3 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none"
                       >
                         {timeSlots.map((slot) => (
-                          <option key={slot} value={slot}>{slot}</option>
+                          <option key={slot} value={slot} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{slot}</option>
                         ))}
                       </select>
                     </div>
@@ -346,7 +346,7 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
 
                 {/* Optional Notes */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1.5">
                     {t.appointment.notesLabel}
                   </label>
                   <textarea
@@ -354,7 +354,7 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                     placeholder={t.appointment.notesPlaceholder}
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] transition-all outline-none resize-none"
+                    className="w-full px-4 py-2.5 bg-[var(--bg-page)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] transition-all outline-none resize-none"
                   ></textarea>
                 </div>
 
@@ -363,22 +363,22 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                   type="submit"
                   disabled={isSubmitting}
                   id="btn-confirmar-agendamiento"
-                  className="w-full py-4 px-6 rounded-xl bg-[#18181B] hover:bg-[#2A2621] text-[#E5C378] border border-[#C5A059]/50 font-extrabold text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center justify-center gap-3 disabled:opacity-75"
+                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#B88E3E] via-[#C5A059] to-[#9E7440] hover:from-[#A6763D] hover:to-[#8C5E2D] text-[#18181B] font-extrabold text-base shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center justify-center gap-3 disabled:opacity-75"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-[#E5C378] border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-[#18181B] border-t-transparent rounded-full animate-spin"></div>
                       <span>{t.appointment.submittingBtn}</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-5 h-5 text-[#C5A059]" />
+                      <Send className="w-5 h-5 text-[#18181B]" />
                       <span>{t.appointment.submitBtn}</span>
                     </>
                   )}
                 </button>
 
-                <p className="text-center text-[11px] text-[#8C8275]">
+                <p className="text-center text-[11px] text-[var(--text-muted)]">
                   {t.appointment.securityNote}
                 </p>
 
@@ -394,45 +394,45 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
       {/* Appointment Success Modal */}
       <AnimatePresence>
         {isSuccessModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100"
+              className="bg-[var(--bg-card)] text-[var(--text-primary)] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-[var(--border-main)]"
             >
-              <div className="p-7 text-center bg-gradient-to-b from-[#FAF8F5] to-white border-b border-[#EBE4D8]">
-                <div className="w-16 h-16 rounded-full bg-[#4E715B]/20 text-[#4E715B] mx-auto flex items-center justify-center mb-4 shadow-inner">
+              <div className="p-7 text-center bg-[var(--bg-surface-elevated)] border-b border-[var(--border-subtle)]">
+                <div className="w-16 h-16 rounded-full bg-[#4E715B]/20 text-[#4E715B] dark:text-[#5C876D] mx-auto flex items-center justify-center mb-4 shadow-inner">
                   <CheckCircle className="w-9 h-9" />
                 </div>
-                <span className="px-3 py-1 rounded-full bg-[#4E715B]/20 text-[#2D4536] text-xs font-bold">
+                <span className="px-3 py-1 rounded-full bg-[#4E715B]/20 text-[#4E715B] dark:text-[#5C876D] text-xs font-bold">
                   {t.appointment.successTitle}
                 </span>
-                <h3 className="text-2xl font-black text-[#18181B] font-outfit mt-2">
+                <h3 className="text-2xl font-black text-[var(--text-primary)] font-outfit mt-2">
                   {t.appointment.successSubtitle}, {formData.fullName.split(' ')[0]}
                 </h3>
-                <p className="text-xs text-[#6B6155] mt-1">
-                  {t.appointment.folioLabel}: <strong className="text-[#8C5E2D]">{bookingCode}</strong>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">
+                  {t.appointment.folioLabel}: <strong className="text-[#C5A059]">{bookingCode}</strong>
                 </p>
               </div>
 
               <div className="p-6 space-y-4 text-xs sm:text-sm">
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EBE4D8] space-y-2 text-[#3F3931]">
+                <div className="p-4 rounded-2xl bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)] space-y-2 text-[var(--text-primary)]">
                   <div className="flex justify-between">
-                    <span className="text-[#8C8275]">{t.appointment.branchLabel}:</span>
-                    <span className="font-bold text-[#18181B]">{formData.branch}</span>
+                    <span className="text-[var(--text-muted)]">{t.appointment.branchLabel}:</span>
+                    <span className="font-bold text-[var(--text-primary)]">{formData.branch}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8C8275]">{t.appointment.serviceLabel}:</span>
-                    <span className="font-bold text-[#8C5E2D] text-right">{formData.service}</span>
+                    <span className="text-[var(--text-muted)]">{t.appointment.serviceLabel}:</span>
+                    <span className="font-bold text-[#C5A059] text-right">{formData.service}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8C8275]">{t.appointment.dateLabel}:</span>
-                    <span className="font-bold text-[#18181B]">{formData.date} - {formData.timeSlot}</span>
+                    <span className="text-[var(--text-muted)]">{t.appointment.dateLabel}:</span>
+                    <span className="font-bold text-[var(--text-primary)]">{formData.date} - {formData.timeSlot}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#8C8275]">{t.appointment.phoneLabel}:</span>
-                    <span className="font-medium text-[#18181B]">{formData.phone}</span>
+                    <span className="text-[var(--text-muted)]">{t.appointment.phoneLabel}:</span>
+                    <span className="font-medium text-[var(--text-primary)]">{formData.phone}</span>
                   </div>
                 </div>
 
@@ -451,16 +451,16 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
                     href={createGoogleCalendarLink()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 px-4 rounded-xl bg-[#FAF8F5] hover:bg-[#F3EFE6] text-[#18181B] border border-[#D8CEBE] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+                    className="w-full py-3 px-4 rounded-xl bg-[var(--bg-surface-elevated)] hover:bg-[var(--border-main)] text-[var(--text-primary)] border border-[var(--border-main)] font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
                   >
-                    <Calendar className="w-4 h-4 text-[#8C5E2D]" />
+                    <Calendar className="w-4 h-4 text-[#C5A059]" />
                     <span>Google Calendar</span>
                   </a>
                 </div>
 
                 <button
                   onClick={() => setIsSuccessModalOpen(false)}
-                  className="w-full py-2.5 text-xs text-[#8C8275] hover:text-[#18181B] font-semibold cursor-pointer"
+                  className="w-full py-2.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] font-semibold cursor-pointer"
                 >
                   {t.common.close}
                 </button>

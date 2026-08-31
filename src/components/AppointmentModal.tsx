@@ -131,9 +131,9 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
 
         {/* Modal Content */}
         {!isSuccess ? (
-          <div className="p-6 sm:p-8 bg-[#FAF8F5]">
+          <div className="p-6 sm:p-8 bg-[var(--bg-page)] transition-colors duration-300">
             {errorMsg && (
-              <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2">
+              <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{errorMsg}</span>
               </div>
@@ -142,11 +142,11 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                   {t.appointment.fullNameLabel}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                     <User className="w-4 h-4" />
                   </div>
                   <input
@@ -155,7 +155,7 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
                     placeholder={t.appointment.fullNamePlaceholder}
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                   />
                 </div>
               </div>
@@ -163,11 +163,11 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
               {/* Phone & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.phoneLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <Phone className="w-4 h-4" />
                     </div>
                     <input
@@ -176,17 +176,17 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
                       placeholder={t.appointment.phonePlaceholder}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.emailLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <Mail className="w-4 h-4" />
                     </div>
                     <input
@@ -195,7 +195,7 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
                       placeholder={t.appointment.emailPlaceholder}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                     />
                   </div>
                 </div>
@@ -204,36 +204,36 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
               {/* Branch & Service */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.branchLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <select
                       value={formData.branch}
                       onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                     >
                       {t.appointment.branchesData.map((b) => (
-                        <option key={b.id} value={b.name}>{b.name}</option>
+                        <option key={b.id} value={b.name} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{b.name}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.serviceLabel}
                   </label>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                    className="w-full px-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                   >
                     {t.appointment.servicesOptions.map((opt, i) => (
-                      <option key={i} value={opt}>{opt}</option>
+                      <option key={i} value={opt} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{opt}</option>
                     ))}
                   </select>
                 </div>
@@ -242,11 +242,11 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
               {/* Date & Time Slot */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.dateLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <Calendar className="w-4 h-4" />
                     </div>
                     <input
@@ -255,26 +255,26 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
                       required
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#18181B] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
                     {t.appointment.timeSlotLabel}
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#8C8275]">
+                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
                       <Clock className="w-4 h-4" />
                     </div>
                     <select
                       value={formData.timeSlot}
                       onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-white rounded-xl border border-[#D5C6AC] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[#18181B] outline-none"
+                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
                     >
                       {timeSlots.map((slot) => (
-                        <option key={slot} value={slot}>{slot}</option>
+                        <option key={slot} value={slot} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{slot}</option>
                       ))}
                     </select>
                   </div>
@@ -301,16 +301,16 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
             </form>
           </div>
         ) : (
-          <div className="p-8 text-center space-y-4 bg-[#FAF8F5]">
-            <div className="w-16 h-16 rounded-full bg-[#4E715B]/20 text-[#4E715B] mx-auto flex items-center justify-center">
+          <div className="p-8 text-center space-y-4 bg-[var(--bg-page)]">
+            <div className="w-16 h-16 rounded-full bg-[#4E715B]/20 text-[#4E715B] dark:text-[#5C876D] mx-auto flex items-center justify-center">
               <CheckCircle className="w-10 h-10" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-[#18181B] font-outfit">{t.appointment.successTitle}</h3>
-              <p className="text-xs text-[#6B6155] mt-1">{t.appointment.folioLabel}: <strong className="text-[#8C5E2D]">{bookingCode}</strong></p>
+              <h3 className="text-xl font-bold text-[var(--text-primary)] font-outfit">{t.appointment.successTitle}</h3>
+              <p className="text-xs text-[var(--text-muted)] mt-1">{t.appointment.folioLabel}: <strong className="text-[#C5A059]">{bookingCode}</strong></p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white border border-[#EBE4D8] text-xs text-left space-y-1.5 text-[#524B42]">
+            <div className="p-4 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-main)] text-xs text-left space-y-1.5 text-[var(--text-secondary)]">
               <p><strong>{t.appointment.fullNameLabel}:</strong> {formData.fullName}</p>
               <p><strong>{t.appointment.branchLabel}:</strong> {formData.branch}</p>
               <p><strong>{t.appointment.serviceLabel}:</strong> {formData.service}</p>
@@ -330,7 +330,7 @@ export function AppointmentModal({ isOpen, onClose, preselectedService }: Appoin
 
               <button
                 onClick={handleResetAndClose}
-                className="w-full py-2.5 text-xs text-[#8C8275] hover:text-[#18181B] font-semibold cursor-pointer"
+                className="w-full py-2.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] font-semibold cursor-pointer"
               >
                 {t.common.close}
               </button>

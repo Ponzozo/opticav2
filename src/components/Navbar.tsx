@@ -3,6 +3,7 @@ import { Phone, Calendar, Menu, X, Clock, MapPin, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react';
 import { BlickLogo } from './BlickLogo';
 import { LanguageSelector } from './LanguageSelector';
+import { ThemeToggle } from './ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
 
 interface NavbarProps {
@@ -53,7 +54,7 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
       {/* Top micro-bar for boutique hours & contact & language */}
-      <div className="hidden md:block bg-[#18181B] text-[#D8CEBE] text-xs py-1.5 px-4 border-b border-[#2D2A26]">
+      <div className="hidden md:block bg-[var(--bg-nav-top)] text-[#D8CEBE] text-xs py-1.5 px-4 border-b border-[#2D2A26] transition-colors duration-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-6">
             <span className="flex items-center gap-1.5 text-[#EDE5D8] font-medium">
@@ -85,8 +86,8 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
       <nav 
         className={`transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#FAF8F5]/95 backdrop-blur-md shadow-md border-b border-[#EBE4D8] py-3' 
-            : 'bg-[#FAF8F5]/90 backdrop-blur-sm border-b border-[#EBE4D8]/80 py-4'
+            ? 'bg-[var(--bg-nav)] backdrop-blur-md shadow-md border-b border-[var(--border-main)] py-3' 
+            : 'bg-[var(--bg-nav)] backdrop-blur-sm border-b border-[var(--border-main)] py-4'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -98,7 +99,7 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
             className="flex items-center group focus:outline-none shrink-0"
             id="brand-logo-link"
           >
-            <BlickLogo variant="horizontal" theme="dark" />
+            <BlickLogo variant="horizontal" theme="auto" />
           </a>
 
           {/* Desktop Navigation Links */}
@@ -111,16 +112,17 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="px-3 py-2 text-sm font-semibold text-[#3F3931] hover:text-[#18181B] hover:bg-[#F3EFE6] rounded-xl transition-all duration-200"
+                className="px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] rounded-xl transition-all duration-200"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Desktop Right Controls: Language Selector + Booking CTA */}
-          <div className="hidden sm:flex items-center space-x-3">
-            <LanguageSelector variant="dropdown" theme="light" />
+          {/* Desktop Right Controls: Language Selector + Theme Toggle + Booking CTA */}
+          <div className="hidden sm:flex items-center space-x-2.5">
+            <LanguageSelector variant="dropdown" theme="auto" />
+            <ThemeToggle variant="icon" />
 
             <button
               onClick={onOpenBookingModal}
@@ -133,14 +135,15 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
             </button>
           </div>
 
-          {/* Mobile Right Controls: Language Selector + Mobile Toggle Button */}
+          {/* Mobile Right Controls: Theme Toggle + Language Selector + Mobile Toggle Button */}
           <div className="flex items-center gap-2 sm:hidden">
-            <LanguageSelector variant="dropdown" theme="light" />
+            <ThemeToggle variant="icon" />
+            <LanguageSelector variant="dropdown" theme="auto" />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               id="mobile-menu-toggle-btn"
               aria-label="Abrir menú de navegación"
-              className="p-2 rounded-xl text-[#3F3931] hover:text-[#18181B] hover:bg-[#F3EFE6] transition-colors"
+              className="p-2 rounded-xl text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] transition-colors cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -155,15 +158,24 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-[#FAF8F5] border-b border-[#EBE4D8] shadow-xl overflow-hidden"
+            className="lg:hidden bg-[var(--bg-page)] border-b border-[var(--border-main)] shadow-xl overflow-hidden"
           >
             <div className="px-4 pt-3 pb-6 space-y-3">
+              
               {/* Language Selection Segmented Bar inside Mobile Drawer */}
-              <div className="pb-2 border-b border-[#EBE4D8]">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C8275] mb-1.5 block">
+              <div className="pb-2 border-b border-[var(--border-main)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--text-subtle)] mb-1.5 block">
                   {t.navbar.selectLanguage}
                 </span>
-                <LanguageSelector variant="segmented" theme="light" />
+                <LanguageSelector variant="segmented" theme="auto" />
+              </div>
+
+              {/* Theme Toggle Pill inside Mobile Drawer */}
+              <div className="pb-2 border-b border-[var(--border-main)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--text-subtle)] mb-1.5 block">
+                  Tema / Theme
+                </span>
+                <ThemeToggle variant="segmented" />
               </div>
 
               <div className="space-y-1">
@@ -175,14 +187,14 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
                       e.preventDefault();
                       handleNavClick(link.href);
                     }}
-                    className="block px-4 py-2.5 rounded-xl text-base font-semibold text-[#2B2723] hover:text-[#18181B] hover:bg-[#F3EFE6] transition-colors"
+                    className="block px-4 py-2.5 rounded-xl text-base font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] transition-colors"
                   >
                     {link.name}
                   </a>
                 ))}
               </div>
               
-              <div className="pt-3 border-t border-[#EBE4D8] flex flex-col gap-3">
+              <div className="pt-3 border-t border-[var(--border-main)] flex flex-col gap-3">
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -196,7 +208,7 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
                 
                 <a
                   href="tel:+525551234567"
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#D8CEBE] text-[#2B2723] font-semibold text-sm hover:bg-[#F3EFE6]"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--border-main)] text-[var(--text-primary)] font-semibold text-sm hover:bg-[var(--bg-surface-elevated)]"
                 >
                   <Phone className="w-4 h-4 text-[#C5A059]" />
                   <span>+52 (55) 5123-4567</span>

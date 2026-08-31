@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Services } from './components/Services';
@@ -40,9 +41,9 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#18181B] selection:bg-[#C5A059] selection:text-[#18181B] relative">
+    <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] selection:bg-[#C5A059] selection:text-[#18181B] relative transition-colors duration-300">
       
-      {/* 1. Navigation Bar with Multilingual Switcher */}
+      {/* 1. Navigation Bar with Multilingual Switcher and Dark/Light Mode Toggle */}
       <Navbar onOpenBookingModal={() => handleOpenBookingModal()} />
 
       <main>
@@ -90,8 +91,11 @@ function MainApp() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <MainApp />
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <MainApp />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
+

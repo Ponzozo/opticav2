@@ -184,19 +184,19 @@ export function FloatingWhatsApp() {
             </div>
 
             {/* Body */}
-            <div className="p-4 space-y-3 bg-[#FAF8F5] text-xs">
+            <div className="p-4 space-y-3 bg-[var(--bg-page)] text-xs transition-colors duration-300">
               
               {/* Message Greeting with Typing Transition Effect */}
               {isTyping ? (
                 <motion.div
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-white rounded-2xl rounded-tl-none shadow-2xs border border-[#EBE4D8] flex items-center gap-2 text-[#8C8275]"
+                  className="p-3 bg-[var(--bg-card)] rounded-2xl rounded-tl-none shadow-2xs border border-[var(--border-main)] flex items-center gap-2 text-[var(--text-muted)]"
                 >
                   <div className="flex items-center gap-1 px-1">
-                    <span className="w-1.5 h-1.5 bg-[#8C5E2D] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-[#8C5E2D] rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-[#8C5E2D] rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                    <span className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                    <span className="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce"></span>
                   </div>
                   <span className="text-[11px] italic font-medium">{t.whatsapp.typingStatus}</span>
                 </motion.div>
@@ -205,24 +205,24 @@ export function FloatingWhatsApp() {
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="p-3 bg-white rounded-2xl rounded-tl-none shadow-2xs border border-[#EBE4D8] text-[#524B42] leading-relaxed"
+                  className="p-3 bg-[var(--bg-card)] rounded-2xl rounded-tl-none shadow-2xs border border-[var(--border-main)] text-[var(--text-secondary)] leading-relaxed"
                 >
-                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#4E715B] mb-1 uppercase tracking-wide">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#4E715B]"></span>
+                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#4E715B] dark:text-[#5C876D] mb-1 uppercase tracking-wide">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#4E715B] dark:bg-[#5C876D]"></span>
                     <span>{t.whatsapp.onlineStatusLabel}</span>
                   </div>
-                  {timeContext.greeting} <strong>Blick Optic</strong>. {t.whatsapp.onlineStatus}.
+                  {timeContext.greeting} <strong className="text-[var(--text-primary)]">Blick Optic</strong>. {t.whatsapp.onlineStatus}.
                 </motion.div>
               )}
 
               {/* Quick Questions Section */}
               <div className="space-y-1.5 pt-1">
-                <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[#8C8275]">
+                <div className="flex items-center justify-between text-[10px] font-bold uppercase text-[var(--text-muted)]">
                   <span className="flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-[#C5A059]" />
                     {t.whatsapp.quickHelpTitle}
                   </span>
-                  <span className="flex items-center gap-1 text-[#8C8275] font-normal normal-case">
+                  <span className="flex items-center gap-1 text-[var(--text-muted)] font-normal normal-case">
                     <Clock className="w-3 h-3 text-[#C5A059]" /> {t.whatsapp.currentScheduleLabel}
                   </span>
                 </div>
@@ -230,7 +230,7 @@ export function FloatingWhatsApp() {
                   <button
                     key={idx}
                     onClick={() => handleSend(q)}
-                    className="w-full text-left p-2.5 rounded-xl bg-white hover:bg-[#F5EFE3] hover:text-[#8C5E2D] border border-[#EBE4D8] hover:border-[#C5A059] transition-all text-[11px] font-medium text-[#18181B] block truncate cursor-pointer shadow-2xs group"
+                    className="w-full text-left p-2.5 rounded-xl bg-[var(--bg-card)] hover:bg-[var(--bg-surface-elevated)] hover:text-[#C5A059] border border-[var(--border-main)] hover:border-[#C5A059] transition-all text-[11px] font-medium text-[var(--text-primary)] block truncate cursor-pointer shadow-2xs group"
                   >
                     <span className="group-hover:translate-x-0.5 inline-block transition-transform">
                       💬 {q}
@@ -252,7 +252,7 @@ export function FloatingWhatsApp() {
                       setCustomMsg(e.target.value);
                     }}
                     onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
-                    className="w-full pl-3.5 pr-10 py-2.5 bg-white rounded-xl border border-[#D5C6AC] text-xs text-[#18181B] focus:outline-none focus:border-[#C5A059] shadow-2xs"
+                    className="w-full pl-3.5 pr-10 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] text-xs text-[var(--text-primary)] focus:outline-none focus:border-[#C5A059] shadow-2xs"
                   />
                   <button
                     onClick={() => handleSend()}

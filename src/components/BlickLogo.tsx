@@ -1,9 +1,10 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface BlickLogoProps {
   variant?: 'full' | 'horizontal' | 'icon' | 'stacked';
   className?: string;
-  theme?: 'dark' | 'light' | 'gold' | 'monochrome';
+  theme?: 'dark' | 'light' | 'gold' | 'monochrome' | 'auto';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showTagline?: boolean;
   height?: number;
@@ -61,10 +62,21 @@ export const BlickGlassesIcon: React.FC<{
 export const BlickLogo: React.FC<BlickLogoProps> = ({
   variant = 'horizontal',
   className = '',
-  theme = 'dark',
+  theme = 'auto',
   size = 'md',
   showTagline = true,
 }) => {
+  let resolvedTheme = theme;
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const themeContext = useTheme();
+    if (theme === 'auto') {
+      resolvedTheme = themeContext.isDark ? 'light' : 'dark';
+    }
+  } catch {
+    if (theme === 'auto') resolvedTheme = 'dark';
+  }
+
   // Theme color palette calibrated for contrast and aesthetic refinement
   const colorMap = {
     // For light backgrounds (Navbar, modals, light cards)
@@ -96,7 +108,7 @@ export const BlickLogo: React.FC<BlickLogoProps> = ({
     },
   };
 
-  const colors = colorMap[theme] || colorMap.dark;
+  const colors = colorMap[resolvedTheme as keyof typeof colorMap] || colorMap.dark;
 
   const sizeClasses = {
     sm: {
