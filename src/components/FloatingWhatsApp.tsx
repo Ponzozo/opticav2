@@ -2,9 +2,10 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { MessageCircle, X, Send, Clock, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { trackWhatsAppInteraction } from '../utils/analytics';
 
 export function FloatingWhatsApp() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [customMsg, setCustomMsg] = useState('');
@@ -42,6 +43,10 @@ export function FloatingWhatsApp() {
           if (typeof window !== 'undefined') {
             sessionStorage.setItem('blick_wa_auto_triggered_50', 'true');
           }
+          trackWhatsAppInteraction('open_chat', {
+            source: 'scroll_50_auto_trigger',
+            language,
+          });
           setIsOpen(true);
         }
       }
@@ -54,7 +59,7 @@ export function FloatingWhatsApp() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasInteracted]);
+  }, [hasInteracted, language]);
 
   // Trigger typing simulation whenever user opens the WhatsApp chat modal
   useEffect(() => {
@@ -100,6 +105,11 @@ export function FloatingWhatsApp() {
   const handleSend = (textToSend?: string) => {
     markInteracted();
     const message = textToSend || customMsg || timeContext.questions[0] || 'Hola Blick Optic';
+    trackWhatsAppInteraction(textToSend ? 'quick_question' : 'send_message', {
+      source: textToSend ? 'quick_question_pill' : 'chat_input',
+      message_preview: message,
+      language,
+    });
     const url = `https://wa.me/525551234567?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
     setIsOpen(false);
@@ -108,11 +118,27 @@ export function FloatingWhatsApp() {
 
   const handleToggleOpen = () => {
     markInteracted();
-    setIsOpen((prev) => !prev);
+    const willBeOpen = !isOpen;
+    if (willBeOpen) {
+      trackWhatsAppInteraction('open_chat', {
+        source: 'floating_trigger_button',
+        language,
+      });
+    } else {
+      trackWhatsAppInteraction('close_chat', {
+        source: 'floating_trigger_button',
+        language,
+      });
+    }
+    setIsOpen(willBeOpen);
   };
 
   const handleClose = () => {
     markInteracted();
+    trackWhatsAppInteraction('close_chat', {
+      source: 'modal_close_button',
+      language,
+    });
     setIsOpen(false);
   };
 
