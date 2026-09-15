@@ -1,4 +1,4 @@
-import { Sparkles, ArrowRight, ShieldCheck, Award, Star, CheckCircle2, Glasses } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, Award, CheckCircle2, Glasses } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -78,27 +78,6 @@ export function Hero({ onOpenBookingModal, onScrollToCatalog }: HeroProps) {
                 <Glasses className="w-5 h-5 text-[#C5A059]" />
                 <span>{t.hero.ctaSecondary}</span>
               </button>
-            </div>
-
-            {/* Social Trust & Rating */}
-            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 border-t border-[var(--border-main)]">
-              <div className="flex -space-x-2 overflow-hidden">
-                <img className="inline-block h-9 w-9 rounded-full ring-2 ring-[var(--border-main)] object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Paciente satisfecho" />
-                <img className="inline-block h-9 w-9 rounded-full ring-2 ring-[var(--border-main)] object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Paciente satisfecho" />
-                <img className="inline-block h-9 w-9 rounded-full ring-2 ring-[var(--border-main)] object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Paciente satisfecho" />
-                <img className="inline-block h-9 w-9 rounded-full ring-2 ring-[var(--border-main)] object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Paciente satisfecho" />
-              </div>
-              <div className="text-left">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#C5A059] text-[#C5A059]" />
-                  ))}
-                  <span className="text-xs font-bold text-[var(--text-primary)] ml-1">{t.hero.ratingScore}</span>
-                </div>
-                <p className="text-xs text-[var(--text-muted)] font-medium">
-                  {t.hero.patientsTrust}
-                </p>
-              </div>
             </div>
 
           </motion.div>

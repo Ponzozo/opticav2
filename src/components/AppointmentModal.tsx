@@ -1,9 +1,8 @@
-import { useState, useEffect, type FormEvent } from 'react';
-import { X, Calendar, Clock, MapPin, User, Phone, Mail, Send, CheckCircle, AlertCircle, Share2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, Calendar, MapPin, MessageCircle, Send, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
-import confetti from 'canvas-confetti';
-import { AppointmentFormData } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { trackWhatsAppInteraction } from '../utils/analytics';
 
 interface AppointmentModalProps {
   isOpen: boolean;
@@ -12,331 +11,164 @@ interface AppointmentModalProps {
 }
 
 export function AppointmentModal({ isOpen, onClose, preselectedService }: AppointmentModalProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
-  const [formData, setFormData] = useState<AppointmentFormData>({
-    fullName: '',
-    phone: '',
-    email: '',
-    branch: t.appointment.branchesData[0]?.name || 'Sucursal Paseo de la Reforma',
-    service: preselectedService || t.appointment.servicesOptions[0] || 'Examen de la Vista Computarizado',
-    date: '',
-    timeSlot: '10:00 AM',
-    notes: '',
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [bookingCode, setBookingCode] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const boutiqueLocation = 'Boutique Insignia - Paseo de la Reforma (CDMX)';
+  const [selectedService, setSelectedService] = useState(
+    preselectedService || t.appointment.servicesOptions[0] || 'Examen de la Vista Computarizado'
+  );
+  const [userName, setUserName] = useState('');
+  const [preferredDate, setPreferredDate] = useState('');
 
   useEffect(() => {
     if (preselectedService) {
-      setFormData(prev => ({ ...prev, service: preselectedService }));
+      setSelectedService(preselectedService);
     }
   }, [preselectedService]);
 
-  const timeSlots = [
-    '08:30 AM', '09:15 AM', '10:00 AM', '11:00 AM', 
-    '12:00 PM', '02:00 PM', '03:30 PM', '04:45 PM', '06:00 PM'
-  ];
+  if (!isOpen) return null;
 
-  const todayDate = new Date().toISOString().split('T')[0];
+  const handleSendWhatsApp = () => {
+    const nameText = userName.trim() ? `\n👤 Nombre: ${userName.trim()}` : '';
+    const dateText = preferredDate ? `\n📅 Fecha estimada: ${preferredDate}` : '';
+    
+    const message = `¡Hola Blick Optic! 👋 Quiero agendar una cita por WhatsApp.${nameText}\n🩺 Servicio / Interés: ${selectedService}\n📍 Sucursal: ${boutiqueLocation}${dateText}\n\n¿Qué horarios tienen disponibles?`;
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setErrorMsg('');
+    trackWhatsAppInteraction('modal_whatsapp', {
+      source: 'quick_booking_modal',
+      service: selectedService,
+      branch: boutiqueLocation,
+      language,
+      message_preview: message,
+    });
 
-    if (!formData.fullName.trim()) {
-      setErrorMsg('Por favor completa tu nombre');
-      return;
-    }
-    if (!formData.phone.trim()) {
-      setErrorMsg('Por favor completa tu teléfono');
-      return;
-    }
-    if (!formData.email.trim()) {
-      setErrorMsg('Por favor completa tu email');
-      return;
-    }
-    if (!formData.date) {
-      setErrorMsg('Por favor selecciona una fecha');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      const code = `VP-${Math.floor(1000 + Math.random() * 9000)}`;
-      setBookingCode(code);
-      setIsSubmitting(false);
-      setIsSuccess(true);
-
-      try {
-        confetti({
-          particleCount: 70,
-          spread: 60,
-          origin: { y: 0.5 }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }, 700);
-  };
-
-  const handleResetAndClose = () => {
-    setIsSuccess(false);
+    const url = `https://wa.me/525551234567?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
     onClose();
   };
 
-  const createWhatsAppLink = () => {
-    const text = encodeURIComponent(
-      `¡Hola Blick Optic! Confirmando cita agendada código ${bookingCode}.\n` +
-      `👤 Paciente: ${formData.fullName}\n` +
-      `📍 Sucursal: ${formData.branch}\n` +
-      `🩺 Servicio: ${formData.service}\n` +
-      `📅 Fecha: ${formData.date} a las ${formData.timeSlot}`
-    );
-    return `https://wa.me/525551234567?text=${text}`;
-  };
-
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="bg-white rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl border border-slate-100 my-8"
+        className="bg-[var(--bg-card)] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-[var(--border-main)] my-8 relative"
       >
         {/* Header */}
         <div className="p-6 bg-[#18181B] border-b border-[#36322C] text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#C5A059]/20 border border-[#C5A059]/40 flex items-center justify-center text-[#E5C378]">
-              <Calendar className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center text-[#25D366]">
+              <MessageCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold font-outfit text-[#E5C378]">{t.appointment.formTitle}</h3>
-              <p className="text-xs text-[#D8CEBE]">Blick Optic • {t.common.freeExamBadge}</p>
+              <h3 className="text-base sm:text-lg font-bold font-outfit text-[#E5C378]">
+                Agenda tu Cita por WhatsApp
+              </h3>
+              <p className="text-xs text-[#D8CEBE]">Atención inmediata con nuestros optometristas</p>
             </div>
           </div>
           <button
-            onClick={handleResetAndClose}
+            onClick={onClose}
             className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+            aria-label="Cerrar modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Content */}
-        {!isSuccess ? (
-          <div className="p-6 sm:p-8 bg-[var(--bg-page)] transition-colors duration-300">
-            {errorMsg && (
-              <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Full Name */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                  {t.appointment.fullNameLabel}
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                    <User className="w-4 h-4" />
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    placeholder={t.appointment.fullNamePlaceholder}
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Phone & Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.phoneLabel}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                      <Phone className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="tel"
-                      required
-                      placeholder={t.appointment.phonePlaceholder}
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.emailLabel}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                      <Mail className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="email"
-                      required
-                      placeholder={t.appointment.emailPlaceholder}
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Branch & Service */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.branchLabel}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <select
-                      value={formData.branch}
-                      onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                    >
-                      {t.appointment.branchesData.map((b) => (
-                        <option key={b.id} value={b.name} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{b.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.serviceLabel}
-                  </label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                  >
-                    {t.appointment.servicesOptions.map((opt, i) => (
-                      <option key={i} value={opt} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{opt}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Date & Time Slot */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.dateLabel}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                      <Calendar className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="date"
-                      min={todayDate}
-                      required
-                      value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
-                    {t.appointment.timeSlotLabel}
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
-                      <Clock className="w-4 h-4" />
-                    </div>
-                    <select
-                      value={formData.timeSlot}
-                      onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                      className="w-full pl-10 pr-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#C5A059] focus:ring-2 focus:ring-[#C5A059]/20 text-sm text-[var(--text-primary)] outline-none"
-                    >
-                      {timeSlots.map((slot) => (
-                        <option key={slot} value={slot} className="bg-[var(--bg-card)] text-[var(--text-primary)]">{slot}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit */}
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 px-5 rounded-xl bg-[#18181B] hover:bg-[#2A2621] text-[#E5C378] border border-[#C5A059]/50 font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <div className="w-5 h-5 border-2 border-[#E5C378] border-t-transparent rounded-full animate-spin"></div>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 text-[#C5A059]" />
-                      <span>{t.appointment.submitBtn}</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
+        <div className="p-6 sm:p-8 bg-[var(--bg-page)] transition-colors duration-300 space-y-4">
+          
+          <div className="p-3.5 rounded-2xl bg-[#25D366]/10 border border-[#25D366]/30 text-xs text-[var(--text-secondary)] flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse shrink-0"></span>
+            <span>Confirmamos tu horario de examen directamente en el chat en menos de 5 minutos.</span>
           </div>
-        ) : (
-          <div className="p-8 text-center space-y-4 bg-[var(--bg-page)]">
-            <div className="w-16 h-16 rounded-full bg-[#4E715B]/20 text-[#4E715B] dark:text-[#5C876D] mx-auto flex items-center justify-center">
-              <CheckCircle className="w-10 h-10" />
+
+          {/* Service / Frame */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
+              Servicio o Modelo de Interés:
+            </label>
+            <input
+              type="text"
+              value={selectedService}
+              onChange={(e) => setSelectedService(e.target.value)}
+              placeholder="Ej. Examen de la vista, Lentes progresivos, Armazón..."
+              className="w-full px-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 text-xs sm:text-sm text-[var(--text-primary)] outline-none"
+            />
+          </div>
+
+          {/* Single Boutique Location */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
+              {t.appointment.branchLabel}:
+            </label>
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-[var(--bg-surface-elevated)] border border-[var(--border-main)]">
+              <div className="w-8 h-8 rounded-lg bg-[#C5A059]/15 text-[#C5A059] flex items-center justify-center shrink-0">
+                <MapPin className="w-4 h-4" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="text-xs font-bold text-[var(--text-primary)] block truncate">
+                  Boutique Insignia — Paseo de la Reforma 222
+                </span>
+                <span className="text-[11px] text-[var(--text-muted)] block truncate">
+                  Col. Juárez, Cuauhtémoc, CDMX • Valet Parking
+                </span>
+              </div>
             </div>
+          </div>
+
+          {/* Optional Name & Date */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <h3 className="text-xl font-bold text-[var(--text-primary)] font-outfit">{t.appointment.successTitle}</h3>
-              <p className="text-xs text-[var(--text-muted)] mt-1">{t.appointment.folioLabel}: <strong className="text-[#C5A059]">{bookingCode}</strong></p>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
+                Tu Nombre (Opcional):
+              </label>
+              <input
+                type="text"
+                placeholder="Ej. Carlos Mendoza"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full px-3.5 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#25D366] text-xs sm:text-sm text-[var(--text-primary)] outline-none"
+              />
             </div>
 
-            <div className="p-4 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-main)] text-xs text-left space-y-1.5 text-[var(--text-secondary)]">
-              <p><strong>{t.appointment.fullNameLabel}:</strong> {formData.fullName}</p>
-              <p><strong>{t.appointment.branchLabel}:</strong> {formData.branch}</p>
-              <p><strong>{t.appointment.serviceLabel}:</strong> {formData.service}</p>
-              <p><strong>{t.appointment.dateLabel}:</strong> {formData.date} - {formData.timeSlot}</p>
-            </div>
-
-            <div className="space-y-2 pt-2">
-              <a
-                href={createWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
-              >
-                <Share2 className="w-4 h-4" />
-                <span>{t.appointment.confirmWhatsAppBtn}</span>
-              </a>
-
-              <button
-                onClick={handleResetAndClose}
-                className="w-full py-2.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] font-semibold cursor-pointer"
-              >
-                {t.common.close}
-              </button>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] mb-1">
+                Día Preferido (Opcional):
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[var(--text-muted)]">
+                  <Calendar className="w-4 h-4 text-[#C5A059]" />
+                </div>
+                <input
+                  type="date"
+                  value={preferredDate}
+                  min={new Date().toISOString().split('T')[0]}
+                  onChange={(e) => setPreferredDate(e.target.value)}
+                  className="w-full pl-10 pr-3 py-2.5 bg-[var(--bg-card)] rounded-xl border border-[var(--border-main)] focus:border-[#25D366] text-xs sm:text-sm text-[var(--text-primary)] outline-none"
+                />
+              </div>
             </div>
           </div>
-        )}
+
+          {/* WhatsApp Submit Button */}
+          <div className="pt-2">
+            <button
+              onClick={handleSendWhatsApp}
+              className="w-full py-3.5 px-5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold text-sm sm:text-base shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer flex items-center justify-center gap-2.5"
+            >
+              <MessageCircle className="w-5 h-5" />
+              <span>Mandar mensaje de WhatsApp</span>
+              <Send className="w-4 h-4" />
+            </button>
+            <p className="text-center text-[11px] text-[var(--text-muted)] mt-2">
+              Se abrirá WhatsApp con los datos de tu consulta listos para enviar.
+            </p>
+          </div>
+
+        </div>
       </motion.div>
     </div>
   );

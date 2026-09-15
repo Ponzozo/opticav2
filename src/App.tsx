@@ -10,10 +10,9 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Services } from './components/Services';
 import { Catalog } from './components/Catalog';
-import { LensTechnology } from './components/LensTechnology';
 import { AboutSection } from './components/AboutSection';
+import { FAQSection } from './components/FAQSection';
 import { AppointmentSection } from './components/AppointmentSection';
-import { TestimonialsAndFAQ } from './components/TestimonialsAndFAQ';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AppointmentModal } from './components/AppointmentModal';
@@ -59,17 +58,14 @@ function MainApp() {
         {/* 4. Catalog / Featured Frames Section (4 categories) */}
         <Catalog onOpenBookingModal={handleOpenBookingModal} />
 
-        {/* 5. Lens Technology & Optical Simulator */}
-        <LensTechnology />
-
-        {/* 6. About Us / Medical Quality Section */}
+        {/* 5. About Us / Medical Quality Section */}
         <AboutSection />
 
-        {/* 7. Appointment / Contact Form Section */}
-        <AppointmentSection initialService={preselectedService} />
+        {/* 6. Frequently Asked Questions (FAQ) Section */}
+        <FAQSection />
 
-        {/* 8. Testimonials and FAQs */}
-        <TestimonialsAndFAQ />
+        {/* 7. Appointment / WhatsApp Contact Section (Agenda tu Examen y Sucursal) */}
+        <AppointmentSection initialService={preselectedService} />
       </main>
 
       {/* 9. Footer */}

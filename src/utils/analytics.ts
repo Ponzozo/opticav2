@@ -92,10 +92,13 @@ export function trackAnalyticsEvent(
 /**
  * Helper specifically for WhatsApp trigger interactions
  */
-export function trackWhatsAppInteraction(action: 'open_chat' | 'close_chat' | 'send_message' | 'quick_question', details: AnalyticsEventParams = {}): void {
+export function trackWhatsAppInteraction(
+  action: 'open_chat' | 'close_chat' | 'send_message' | 'quick_question' | 'contact_section_whatsapp' | 'branch_whatsapp' | 'navbar_whatsapp' | 'modal_whatsapp' | string,
+  details: AnalyticsEventParams = {}
+): void {
   trackAnalyticsEvent('whatsapp_click', {
     category: 'engagement',
-    label: 'WhatsApp Floating Trigger',
+    label: details.label || 'WhatsApp Interaction',
     action,
     ...details,
   });

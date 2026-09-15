@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Phone, Calendar, Menu, X, Clock, MapPin, Sparkles } from 'lucide-react';
+import { Phone, Calendar, Menu, X, Clock, MapPin, Sparkles, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BlickLogo } from './BlickLogo';
 import { LanguageSelector } from './LanguageSelector';
 import { ThemeToggle } from './ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
+import { trackWhatsAppInteraction } from '../utils/analytics';
 
 interface NavbarProps {
   onOpenBookingModal: () => void;
@@ -31,9 +32,7 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
     { name: t.navbar.home, href: '#inicio' },
     { name: t.navbar.services, href: '#servicios' },
     { name: t.navbar.catalog, href: '#catalogo' },
-    { name: t.navbar.technology, href: '#tecnologia' },
     { name: t.navbar.boutique, href: '#acerca-de' },
-    { name: t.navbar.reviews, href: '#opiniones' },
     { name: t.navbar.contact, href: '#contacto' },
   ];
 
@@ -71,6 +70,16 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
               <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse"></span>
               {t.navbar.topBarPromo}
             </span>
+            <a 
+              href="https://wa.me/525551234567?text=%C2%A1Hola%20Blick%20Optic!%20Quisiera%20m%C3%A1s%20informaci%C3%B3n%20o%20agendar%20mi%20examen." 
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppInteraction('navbar_whatsapp', { source: 'topbar_whatsapp_link' })}
+              className="flex items-center gap-1.5 text-[#25D366] hover:text-[#1EBE5D] transition-colors font-semibold"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+              <span>WhatsApp</span>
+            </a>
             <a 
               href="tel:+525551234567" 
               className="flex items-center gap-1.5 text-[#F5F0E6] hover:text-[#C5A059] transition-colors font-medium"
@@ -195,6 +204,20 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
               </div>
               
               <div className="pt-3 border-t border-[var(--border-main)] flex flex-col gap-3">
+                <a
+                  href="https://wa.me/525551234567?text=%C2%A1Hola%20Blick%20Optic!%20Quisiera%20agendar%20mi%20examen%20de%20la%20vista."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    trackWhatsAppInteraction('navbar_whatsapp', { source: 'mobile_drawer_whatsapp_btn' });
+                  }}
+                  className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-base shadow-md shadow-[#25D366]/25 cursor-pointer"
+                >
+                  <MessageCircle className="w-5 h-5 text-white" />
+                  <span>Mandar WhatsApp</span>
+                </a>
+
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);

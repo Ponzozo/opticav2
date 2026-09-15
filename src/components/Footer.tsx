@@ -1,23 +1,11 @@
-import { Phone, Mail, MapPin, Clock, ArrowUp, Send, Check } from 'lucide-react';
-import { useState, type FormEvent } from 'react';
+import { Phone, Mail, MapPin, Clock, ArrowUp, MessageCircle } from 'lucide-react';
 import { BlickLogo } from './BlickLogo';
 import { LanguageSelector } from './LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
+import { trackWhatsAppInteraction } from '../utils/analytics';
 
 export function Footer() {
   const { t } = useLanguage();
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: FormEvent) => {
-    e.preventDefault();
-    if (newsletterEmail) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setNewsletterEmail('');
-      }, 2500);
-    }
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -27,50 +15,6 @@ export function Footer() {
     <footer className="bg-[#121214] text-[#D8CEBE] pt-16 pb-12 border-t border-[#2A2621] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Newsletter & Promo Ribbon */}
-        <div className="pb-12 mb-12 border-b border-[#2A2621] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 space-y-1">
-            <h3 className="text-xl sm:text-2xl font-bold text-[#E5C378] font-outfit">
-              {t.footer.newsletterTitle}
-            </h3>
-            <p className="text-xs sm:text-sm text-[#A89E90]">
-              {t.footer.newsletterSubtitle}
-            </p>
-          </div>
-
-          <div className="lg:col-span-6">
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 max-w-md lg:ml-auto">
-              <div className="relative flex-1">
-                <Mail className="w-4 h-4 text-[#8C8275] absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="email"
-                  required
-                  placeholder={t.footer.emailPlaceholder}
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-[#18181B] border border-[#36322C] rounded-xl text-xs sm:text-sm text-white placeholder:text-[#8C8275] focus:outline-none focus:border-[#C5A059]"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-3 bg-[#C5A059] hover:bg-[#D8B26E] text-[#18181B] font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0"
-              >
-                {subscribed ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>{t.footer.subscribedMsg}</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span>{t.footer.subscribeBtn}</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-
         {/* Main Footer 4 Columns Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#2A2621]">
           
@@ -130,9 +74,9 @@ export function Footer() {
               <li><a href="#inicio" className="hover:text-[#E5C378] transition-colors">{t.navbar.home}</a></li>
               <li><a href="#servicios" className="hover:text-[#E5C378] transition-colors">{t.navbar.services}</a></li>
               <li><a href="#catalogo" className="hover:text-[#E5C378] transition-colors">{t.navbar.catalog}</a></li>
-              <li><a href="#tecnologia" className="hover:text-[#E5C378] transition-colors">{t.navbar.technology}</a></li>
               <li><a href="#acerca-de" className="hover:text-[#E5C378] transition-colors">{t.navbar.boutique}</a></li>
-              <li><a href="#opiniones" className="hover:text-[#E5C378] transition-colors">{t.navbar.reviews}</a></li>
+              <li><a href="#preguntas-frecuentes" className="hover:text-[#E5C378] transition-colors">FAQ</a></li>
+              <li><a href="#contacto" className="hover:text-[#E5C378] transition-colors">{t.navbar.contact}</a></li>
             </ul>
           </div>
 
@@ -154,6 +98,19 @@ export function Footer() {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#C5A059] shrink-0 mt-0.5" />
                 <span>{t.footer.mainAddress}</span>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <MessageCircle className="w-4 h-4 text-[#25D366] shrink-0" />
+                <a 
+                  href="https://wa.me/525551234567?text=%C2%A1Hola%20Blick%20Optic!%20Quisiera%20agendar%20mi%20examen%20de%20la%20vista." 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppInteraction('footer_whatsapp', { source: 'footer_contact_link' })}
+                  className="hover:text-[#25D366] text-[#25D366] font-semibold transition-colors"
+                >
+                  WhatsApp: +52 (55) 5123-4567
+                </a>
               </div>
 
               <div className="flex items-center gap-2.5">

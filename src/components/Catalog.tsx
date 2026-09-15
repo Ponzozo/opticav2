@@ -14,7 +14,6 @@ export function Catalog({ onOpenBookingModal }: CatalogProps) {
   const [activeCategory, setActiveCategory] = useState<FrameCategory>('todos');
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [selectedColorIndex, setSelectedColorIndex] = useState<{ [key: string]: number }>({});
   const [activeSlide, setActiveSlide] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -184,14 +183,13 @@ export function Catalog({ onOpenBookingModal }: CatalogProps) {
           >
             {filteredProducts.map((product) => {
               const isFav = favorites.includes(product.id);
-              const colorIdx = selectedColorIndex[product.id] || 0;
 
               return (
                 <div
                   key={product.id}
                   data-catalog-card
                   onClick={() => setSelectedProductId(product.id)}
-                  className="w-[82vw] max-w-[310px] sm:w-[320px] lg:w-auto shrink-0 lg:shrink snap-center group bg-[var(--bg-card)] rounded-3xl overflow-hidden border border-[var(--border-main)] hover:border-[#C5A059] shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer h-[470px] sm:h-[490px] lg:h-[500px]"
+                  className="w-[82vw] max-w-[310px] sm:w-[320px] lg:w-auto shrink-0 lg:shrink snap-center group bg-[var(--bg-card)] rounded-3xl overflow-hidden border border-[var(--border-main)] hover:border-[#C5A059] shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer h-[440px] sm:h-[450px] lg:h-[460px]"
                 >
                   {/* Image Area with Standard Fixed Height */}
                   <div className="relative h-52 sm:h-56 bg-[var(--bg-surface-elevated)] shrink-0 overflow-hidden flex items-center justify-center p-4">
@@ -247,25 +245,6 @@ export function Catalog({ onOpenBookingModal }: CatalogProps) {
                     <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
                       {product.description}
                     </p>
-
-                    {/* Color Options */}
-                    <div className="flex items-center gap-1.5 pt-2 border-t border-[var(--border-subtle)]">
-                      <span className="text-[10px] text-[var(--text-muted)] uppercase font-bold mr-1">{t.common.color}:</span>
-                      {product.colors.map((color, cIdx) => (
-                        <button
-                          key={cIdx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedColorIndex({ ...selectedColorIndex, [product.id]: cIdx });
-                          }}
-                          className={`w-3.5 h-3.5 rounded-full border transition-all cursor-pointer ${
-                            colorIdx === cIdx ? 'ring-2 ring-[#C5A059] ring-offset-1 scale-110' : 'opacity-80 hover:opacity-100'
-                          }`}
-                          style={{ backgroundColor: color }}
-                          aria-label={`Color ${cIdx + 1}`}
-                        />
-                      ))}
-                    </div>
                   </div>
 
                   {/* Card Footer Fixed at Bottom */}
