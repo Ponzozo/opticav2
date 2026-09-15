@@ -143,7 +143,7 @@ export function FloatingWhatsApp() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
       
       {/* Interactive Chat Bubble popup */}
       <AnimatePresence>
@@ -300,18 +300,18 @@ export function FloatingWhatsApp() {
         onClick={handleToggleOpen}
         id="btn-floating-whatsapp"
         aria-label="WhatsApp Blick Optic"
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white shadow-xl shadow-[#25D366]/30 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="group relative flex items-center justify-center w-16 h-16 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-white shadow-xl shadow-[#25D366]/30 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
       >
-        <MessageCircle className="w-7 h-7 fill-white text-white" />
+        <MessageCircle className="w-8 h-8 fill-white text-white" />
         
         {/* Floating tooltip on hover */}
         {!isOpen && (
-          <span className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-[#18181B] text-[#E5C378] border border-[#C5A059]/40 text-xs font-semibold whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
+          <span className="absolute right-20 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-[#18181B] text-[#E5C378] border border-[#C5A059]/40 text-xs font-semibold whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
             {t.whatsapp.tooltipText}
           </span>
         )}
 
-        <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#C5A059] text-[#18181B] text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-[0_2px_6px_rgba(255,255,255,0.75)] drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
+        <span className="absolute -top-1 -right-1 w-6 h-6 bg-[#C5A059] text-[#18181B] text-xs font-black rounded-full flex items-center justify-center border-2 border-white shadow-[0_2px_6px_rgba(255,255,255,0.75)] drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
           1
         </span>
       </button>

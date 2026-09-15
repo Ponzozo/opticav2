@@ -16,6 +16,7 @@ import { AppointmentSection } from './components/AppointmentSection';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { AppointmentModal } from './components/AppointmentModal';
+import { SEO } from './components/SEO';
 
 function MainApp() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -41,7 +42,7 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-primary)] selection:bg-[#C5A059] selection:text-[#18181B] relative transition-colors duration-300">
-      
+      <SEO />
       {/* 1. Navigation Bar with Multilingual Switcher and Dark/Light Mode Toggle */}
       <Navbar onOpenBookingModal={() => handleOpenBookingModal()} />
 

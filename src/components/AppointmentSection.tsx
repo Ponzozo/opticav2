@@ -69,7 +69,11 @@ export function AppointmentSection({ initialService = '' }: AppointmentSectionPr
   ];
 
   return (
-    <section id="contacto" className="py-20 bg-[var(--bg-page)] relative transition-colors duration-300">
+    <section id="citas" className="py-20 bg-[var(--bg-page)] relative transition-colors duration-300">
+      {/* Alias anchors for contacto and appointment */}
+      <span id="contacto" className="absolute -top-28 pointer-events-none" aria-hidden="true" />
+      <span id="appointment" className="absolute -top-28 pointer-events-none" aria-hidden="true" />
+      <span id="agenda" className="absolute -top-28 pointer-events-none" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

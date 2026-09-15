@@ -14,40 +14,83 @@ interface NavbarProps {
 export function Navbar({ onOpenBookingModal }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const [activeSection, setActiveSection] = useState<string>('inicio');
+  const { t, language } = useLanguage();
+
+  const navLinks = [
+    { name: t.navbar.home, href: '#inicio', id: 'inicio' },
+    { name: t.navbar.services, href: '#servicios', id: 'servicios' },
+    { name: t.navbar.catalog, href: '#catalogo', id: 'catalogo' },
+    { name: t.navbar.boutique, href: '#acerca-de', id: 'acerca-de' },
+    { name: 'FAQ', href: '#faq', id: 'faq' },
+    { name: language === 'en' ? 'Appointments' : 'Citas', href: '#citas', id: 'citas' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 20);
+
+      // Detect active visible section
+      const sectionIds = ['citas', 'faq', 'acerca-de', 'catalogo', 'servicios', 'inicio'];
+      const scrollY = window.scrollY;
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.getBoundingClientRect().height + 40 : 120;
+
+      for (const id of sectionIds) {
+        let el = document.getElementById(id);
+        if (!el && id === 'faq') el = document.getElementById('preguntas-frecuentes');
+        if (!el && id === 'citas') el = document.getElementById('contacto');
+
+        if (el) {
+          const top = el.offsetTop - headerHeight;
+          if (scrollY >= top) {
+            setActiveSection(id);
+            break;
+          }
+        }
       }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: t.navbar.home, href: '#inicio' },
-    { name: t.navbar.services, href: '#servicios' },
-    { name: t.navbar.catalog, href: '#catalogo' },
-    { name: t.navbar.boutique, href: '#acerca-de' },
-    { name: t.navbar.contact, href: '#contacto' },
-  ];
-
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
+    const targetId = href.replace('#', '');
+    let element = document.getElementById(targetId);
+
+    if (!element) {
+      if (targetId === 'faq' || targetId === 'preguntas-frecuentes') {
+        element = document.getElementById('faq') || document.getElementById('preguntas-frecuentes');
+      } else if (targetId === 'citas' || targetId === 'contacto' || targetId === 'appointment' || targetId === 'agenda') {
+        element = document.getElementById('citas') || document.getElementById('contacto') || document.getElementById('appointment') || document.getElementById('agenda');
+      }
+    }
+
     if (element) {
-      const navOffset = 80;
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.getBoundingClientRect().height : 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight + 2;
+
       window.scrollTo({
-        top: offsetPosition,
+        top: Math.max(0, offsetPosition),
         behavior: 'smooth'
       });
+
+      if (window.history.pushState) {
+        window.history.pushState(null, '', href);
+      }
     }
+  };
+
+  const isSectionActive = (linkId: string) => {
+    if (activeSection === linkId) return true;
+    if (linkId === 'faq' && (activeSection === 'faq' || activeSection === 'preguntas-frecuentes')) return true;
+    if (linkId === 'citas' && (activeSection === 'citas' || activeSection === 'contacto' || activeSection === 'appointment')) return true;
+    return false;
   };
 
   return (
@@ -112,20 +155,27 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
           </a>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.href);
-                }}
-                className="px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] rounded-xl transition-all duration-200"
-              >
-                {link.name}
-              </a>
-            ))}
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-1.5">
+            {navLinks.map((link) => {
+              const active = isSectionActive(link.id);
+              return (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
+                  className={`px-3 py-1.5 text-xs xl:text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
+                    active
+                      ? 'text-[#C5A059] bg-[#C5A059]/15 shadow-2xs font-bold'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)]'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
           </div>
 
           {/* Desktop Right Controls: Language Selector + Theme Toggle + Booking CTA */}
@@ -188,19 +238,26 @@ export function Navbar({ onOpenBookingModal }: NavbarProps) {
               </div>
 
               <div className="space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }}
-                    className="block px-4 py-2.5 rounded-xl text-base font-semibold text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)] transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  const active = isSectionActive(link.id);
+                  return (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(link.href);
+                      }}
+                      className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors cursor-pointer ${
+                        active
+                          ? 'text-[#C5A059] bg-[#C5A059]/15 font-bold'
+                          : 'text-[var(--text-primary)] hover:bg-[var(--bg-surface-elevated)]'
+                      }`}
+                    >
+                      {link.name}
+                    </a>
+                  );
+                })}
               </div>
               
               <div className="pt-3 border-t border-[var(--border-main)] flex flex-col gap-3">

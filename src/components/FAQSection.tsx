@@ -141,7 +141,9 @@ export function FAQSection() {
   };
 
   return (
-    <section id="preguntas-frecuentes" className="py-20 bg-[var(--bg-surface-elevated)] relative transition-colors duration-300 border-t border-[var(--border-subtle)]">
+    <section id="faq" className="py-20 bg-[var(--bg-surface-elevated)] relative transition-colors duration-300 border-t border-[var(--border-subtle)]">
+      {/* Alias anchor for preguntas-frecuentes */}
+      <span id="preguntas-frecuentes" className="absolute -top-28 pointer-events-none" aria-hidden="true" />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

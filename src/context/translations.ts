@@ -1,4 +1,10 @@
 export interface TranslationSchema {
+  seo: {
+    title: string;
+    description: string;
+    keywords: string;
+    ogImageAlt: string;
+  };
   common: {
     bookAppointment: string;
     viewCatalog: string;
@@ -294,6 +300,12 @@ export interface TranslationSchema {
 export const translations: Record<'es' | 'en' | 'pt' | 'fr', TranslationSchema> = {
   // ========================== ESPAÑOL ==========================
   es: {
+    seo: {
+      title: 'Blick Optic | Laboratorio Óptico Digital en CDMX',
+      description: 'Agenda tu examen de la vista por computadora. Armazones de diseño con micas incluidas y entrega en 24h. Visítanos en Paseo de la Reforma, CDMX.',
+      keywords: 'optica cdmx, examen de la vista gratis, lentes graduados, micas antirreflejantes, armazones de diseño, blick optic, luz azul',
+      ogImageAlt: 'Interior de Boutique Blick Optic en CDMX',
+    },
     common: {
       bookAppointment: 'Agendar Cita',
       viewCatalog: 'Ver Catálogo',
@@ -845,6 +857,12 @@ export const translations: Record<'es' | 'en' | 'pt' | 'fr', TranslationSchema> 
 
   // ========================== ENGLISH ==========================
   en: {
+    seo: {
+      title: 'Blick Optic | Digital Optical Lab in Mexico City',
+      description: 'Book your computerized eye exam today. Designer frames with lenses included and 24h delivery. Visit our flagship boutique in Paseo de la Reforma, CDMX.',
+      keywords: 'optometrist cdmx, free eye exam, prescription glasses, anti-reflective lenses, designer frames, blick optic, blue light',
+      ogImageAlt: 'Interior of Blick Optic Boutique in Mexico City',
+    },
     common: {
       bookAppointment: 'Book Appointment',
       viewCatalog: 'View Catalog',
@@ -1396,6 +1414,12 @@ export const translations: Record<'es' | 'en' | 'pt' | 'fr', TranslationSchema> 
 
   // ========================== PORTUGUÊS ==========================
   pt: {
+    seo: {
+      title: 'Blick Optic | Laboratório Ótico Digital na Cidade do México',
+      description: 'Agende seu exame de vista computadorizado. Armações de grife com lentes incluídas e entrega em 24h. Visite-nos na Paseo de la Reforma, CDMX.',
+      keywords: 'otica cdmx, exame de vista gratis, oculos de grau, lentes antirreflexo, armacoes de design, blick optic, luz azul',
+      ogImageAlt: 'Interior da Boutique Blick Optic na Cidade do México',
+    },
     common: {
       bookAppointment: 'Agendar Consulta',
       viewCatalog: 'Ver Catálogo',
@@ -1947,6 +1971,12 @@ export const translations: Record<'es' | 'en' | 'pt' | 'fr', TranslationSchema> 
 
   // ========================== FRANÇAIS ==========================
   fr: {
+    seo: {
+      title: 'Blick Optic | Laboratoire Optique Numérique à Mexico',
+      description: 'Réservez votre examen de la vue informatisé. Montures de créateurs avec verres inclus et livraison en 24h. Visitez-nous à Paseo de la Reforma, CDMX.',
+      keywords: 'opticien cdmx, examen de la vue gratuit, lunettes de vue, verres antireflets, montures de créateurs, blick optic, lumière bleue',
+      ogImageAlt: 'Intérieur de la Boutique Blick Optic à Mexico',
+    },
     common: {
       bookAppointment: 'Prendre Rendez-vous',
       viewCatalog: 'Voir le Catalogue',
